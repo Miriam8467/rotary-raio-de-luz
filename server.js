@@ -4163,10 +4163,10 @@ app.get("/api/dashboard", async (req, res) => {
 // INICIAR SERVIDOR
 // ========================================
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
 
     console.log(
-        `Servidor funcionando em http://localhost:${PORT}`
+        `Servidor funcionando na porta ${PORT}`
     );
 
 });
