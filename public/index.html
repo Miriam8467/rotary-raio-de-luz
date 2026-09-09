@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Dashboard - Rotary Raio de Luz</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <style>
+
+        /* ==================================================
+           DASHBOARD
+        ================================================== */
+
+        .dashboard-cards {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .dashboard-card {
+
+            background: #ffffff;
+
+            border: 1px solid #e1e6ed;
+
+            border-radius: 12px;
+
+            padding: 25px;
+
+            min-height: 130px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.04);
+
+        }
+
+
+        .dashboard-card .card-title {
+
+            font-size: 16px;
+
+            font-weight: 600;
+
+            color: #53657a;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .dashboard-card .card-value {
+
+            font-size: 30px;
+
+            font-weight: 700;
+
+            color: #174ea6;
+
+        }
+
+
+        /* ==================================================
+           RESUMO DOS TIPOS DE DOAÇÃO
+        ================================================== */
+
+        #resumoTipos {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+
+            margin-top: 20px;
+
+        }
+
+
+        .tipo-doacao-card {
+
+            background: #ffffff;
+
+            border: 1px solid #e1e6ed;
+
+            border-top: 4px solid #174ea6;
+
+            border-radius: 12px;
+
+            padding: 24px;
+
+            min-height: 160px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.04);
+
+        }
+
+
+        .tipo-doacao-nome {
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+            color: #17324d;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .tipo-doacao-quantidade {
+
+            font-size: 32px;
+
+            font-weight: 700;
+
+            color: #174ea6;
+
+            line-height: 1;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .tipo-doacao-label {
+
+            font-size: 14px;
+
+            color: #6b7c8f;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .tipo-doacao-itens {
+
+            background: #f5f8fc;
+
+            border: 1px solid #e5eaf0;
+
+            border-radius: 8px;
+
+            padding: 10px;
+
+            text-align: center;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            color: #465a70;
+
+        }
+
+
+        /* ==================================================
+           RESPONSIVIDADE
+        ================================================== */
+
+        @media (max-width: 1000px) {
+
+            .dashboard-cards {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            #resumoTipos {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .dashboard-cards {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            #resumoTipos {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+
+        /* ==================================================
+           MODAL DE LOGOUT
+        ================================================== */
+
+        .logout-modal {
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                rgba(20, 35, 50, 0.45);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            z-index: 9999;
+
+            padding: 20px;
+
+        }
+
+
+        .logout-modal-content {
+
+            width: 100%;
+
+            max-width: 420px;
+
+            background: #ffffff;
+
+            border-radius: 14px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 15px 40px
+                rgba(0, 0, 0, 0.18);
+
+            text-align: center;
+
+        }
+
+
+        .logout-modal-content h2 {
+
+            margin: 0 0 10px;
+
+            color: #17324d;
+
+        }
+
+
+        .logout-modal-content p {
+
+            margin: 0 0 25px;
+
+            color: #66788a;
+
+        }
+
+
+        .logout-modal-buttons {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 12px;
+
+        }
+
+
+        .logout-modal-buttons button {
+
+            min-width: 110px;
+
+            padding: 11px 20px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+        }
+
+
+        .logout-cancel {
+
+            background: #ffffff;
+
+            border: 1px solid #d5dce4;
+
+            color: #53657a;
+
+        }
+
+
+        .logout-confirm {
+
+            background: #174ea6;
+
+            border: 1px solid #174ea6;
+
+            color: #ffffff;
+
+        }
+
+
+        .logout-confirm:disabled {
+
+            opacity: 0.6;
+
+            cursor: not-allowed;
+
+        }
+
+
+        /* ==================================================
+           BOTÃO SAIR
+        ================================================== */
+
+        .sidebar-footer {
+
+            margin-top: auto;
+
+            padding-top: 20px;
+
+        }
+
+
+        .btn-logout {
+
+            width: 100%;
+
+            padding: 11px 15px;
+
+            background: #ffffff;
+
+            border: 1px solid #dce2e8;
+
+            border-radius: 8px;
+
+            color: #53657a;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .btn-logout:hover {
+
+            background: #f5f7fa;
+
+            border-color: #174ea6;
+
+            color: #174ea6;
+
+        }
+
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="container">
+
+
+        <!-- ==================================================
+             MENU
+        ================================================== -->
+
+        <aside class="sidebar">
+
+
+            <div class="logo">
+
+                <h2>Rotary</h2>
+
+                <p>Raio de Luz</p>
+
+            </div>
+
+
+            <ul class="menu">
+
+
+                <li>
+
+                    <a
+                        href="index.html"
+                        class="active"
+                    >
+                        🏠 Dashboard
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="doacoes.html">
+                        🎁 Doações
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="doadores.html">
+                        👥 Doadores
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="instituicoes.html">
+                        🏢 Instituições
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="projetos.html">
+                        📋 Projetos
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="relatorios.html">
+                        📊 Relatórios
+                    </a>
+
+                </li>
+
+
+            </ul>
+
+
+            <!-- SAIR -->
+
+            <div class="sidebar-footer">
+
+                <button
+                    type="button"
+                    id="btnLogout"
+                    class="btn-logout"
+                >
+                    Sair
+                </button>
+
+            </div>
+
+
+        </aside>
+
+
+
+        <!-- ==================================================
+             CONTEÚDO PRINCIPAL
+        ================================================== -->
+
+        <main class="main">
+
+
+            <!-- CABEÇALHO -->
+
+            <div class="header">
+
+                <h1>
+                    Dashboard
+                </h1>
+
+                <p>
+                    Visão geral do sistema do Rotary Club de Campo Mourão - Raio de Luz.
+                </p>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 INDICADORES PRINCIPAIS
+            ================================================== -->
+
+            <section class="dashboard-cards">
+
+
+                <div class="dashboard-card">
+
+                    <span class="card-title">
+                        Total de Doações
+                    </span>
+
+                    <strong
+                        id="totalDoacoes"
+                        class="card-value"
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+
+
+                <div class="dashboard-card">
+
+                    <span class="card-title">
+                        Instituições
+                    </span>
+
+                    <strong
+                        id="totalInstituicoes"
+                        class="card-value"
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+
+
+                <div class="dashboard-card">
+
+                    <span class="card-title">
+                        Total de Itens
+                    </span>
+
+                    <strong
+                        id="totalItens"
+                        class="card-value"
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+
+
+                <div class="dashboard-card">
+
+                    <span class="card-title">
+                        Valor das Doações
+                    </span>
+
+                    <strong
+                        id="valorDoacoes"
+                        class="card-value"
+                    >
+                        R$ 0,00
+                    </strong>
+
+                </div>
+
+
+
+                <div class="dashboard-card">
+
+                    <span class="card-title">
+                        Projetos
+                    </span>
+
+                    <strong
+                        id="totalProjetos"
+                        class="card-value"
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- ==================================================
+                 RESUMO DAS DOAÇÕES
+            ================================================== -->
+
+            <section class="dashboard-section">
+
+
+                <h2>
+                    Resumo das Doações
+                </h2>
+
+
+                <p>
+                    Quantidade de doações por tipo
+                </p>
+
+
+                <div id="resumoTipos">
+
+                    <p class="info">
+                        Carregando informações...
+                    </p>
+
+                </div>
+
+
+            </section>
+
+
+        </main>
+
+
+    </div>
+
+
+
+    <!-- ==================================================
+         JAVASCRIPT DO DASHBOARD
+    ================================================== -->
+
+    <script src="dashboard.js"></script>
+
+
+
+    <!-- ==================================================
+         LOGOUT
+    ================================================== -->
+
+    <script>
+
+        const btnLogout =
+            document.getElementById(
+                "btnLogout"
+            );
+
+
+        if (btnLogout) {
+
+            btnLogout.addEventListener(
+                "click",
+                function () {
+
+
+                    const modal =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    modal.className =
+                        "logout-modal";
+
+
+                    modal.innerHTML = `
+
+                        <div class="logout-modal-content">
+
+                            <h2>
+                                Sair do sistema
+                            </h2>
+
+                            <p>
+                                Deseja realmente sair do sistema?
+                            </p>
+
+                            <div class="logout-modal-buttons">
+
+                                <button
+                                    type="button"
+                                    class="logout-cancel"
+                                    id="cancelarLogout"
+                                >
+                                    Cancelar
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="logout-confirm"
+                                    id="confirmarLogout"
+                                >
+                                    Sair
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+
+                    document.body.appendChild(
+                        modal
+                    );
+
+
+                    const cancelar =
+                        document.getElementById(
+                            "cancelarLogout"
+                        );
+
+
+                    const confirmar =
+                        document.getElementById(
+                            "confirmarLogout"
+                        );
+
+
+                    cancelar.addEventListener(
+                        "click",
+                        function () {
+
+                            modal.remove();
+
+                        }
+                    );
+
+
+                    modal.addEventListener(
+                        "click",
+                        function (event) {
+
+                            if (
+                                event.target === modal
+                            ) {
+
+                                modal.remove();
+
+                            }
+
+                        }
+                    );
+
+
+                    confirmar.addEventListener(
+                        "click",
+                        async function () {
+
+
+                            confirmar.disabled =
+                                true;
+
+
+                            confirmar.textContent =
+                                "Saindo...";
+
+
+                            try {
+
+                                const resposta =
+                                    await fetch(
+                                        "/api/logout",
+                                        {
+                                            method: "POST"
+                                        }
+                                    );
+
+
+                                const dados =
+                                    await resposta.json();
+
+
+                                if (
+                                    !resposta.ok ||
+                                    dados.sucesso === false
+                                ) {
+
+                                    throw new Error(
+                                        dados.mensagem ||
+                                        "Erro ao sair do sistema."
+                                    );
+
+                                }
+
+
+                                window.location.href =
+                                    "/login.html";
+
+
+                            }
+                            catch (erro) {
+
+                                console.error(
+                                    "Erro ao sair:",
+                                    erro
+                                );
+
+
+                                confirmar.disabled =
+                                    false;
+
+
+                                confirmar.textContent =
+                                    "Sair";
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

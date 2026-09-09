@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Instituições - Rotary Raio de Luz</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- MENU -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+
+                <h2>Rotary</h2>
+
+                <p>Raio de Luz</p>
+
+            </div>
+
+
+            <ul class="menu">
+
+                <li>
+                    <a href="index.html">
+                        🏠 Dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a href="doacoes.html">
+                        🎁 Doações
+                    </a>
+                </li>
+
+                <li>
+                    <a href="doadores.html">
+                        👥 Doadores
+                    </a>
+                </li>
+
+                <li>
+                    <a href="instituicoes.html" class="active">
+                        🏢 Instituições
+                    </a>
+                </li>
+
+                <li>
+                    <a href="projetos.html">
+                        📋 Projetos
+                    </a>
+                </li>
+
+                <li>
+                    <a href="relatorios.html">
+                        📊 Relatórios
+                    </a>
+                </li>
+
+            </ul>
+
+        </aside>
+
+
+        <!-- CONTEÚDO -->
+
+        <main class="main">
+
+            <div class="header">
+
+                <h1>Instituições</h1>
+
+                <p>
+                    Cadastro das instituições atendidas pelo Rotary.
+                </p>
+
+            </div>
+
+
+            <!-- FORMULÁRIO -->
+
+            <section class="dashboard-section">
+
+                <h2>Nova instituição</h2>
+
+                <form id="formInstituicao">
+
+                    <label for="nome">
+                        Nome da instituição
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nome"
+                        name="nome"
+                        placeholder="Digite o nome da instituição"
+                        required
+                    >
+
+
+                    <label for="tipo">
+                        Tipo de instituição
+                    </label>
+
+                    <select id="tipo" name="tipo">
+
+                        <option value="">
+                            Selecione
+                        </option>
+
+                        <option value="Hospital">
+                            Hospital
+                        </option>
+
+                        <option value="Escola">
+                            Escola
+                        </option>
+
+                        <option value="Instituição social">
+                            Instituição social
+                        </option>
+
+                        <option value="ONG">
+                            ONG
+                        </option>
+
+                        <option value="Outro">
+                            Outro
+                        </option>
+
+                    </select>
+
+
+                    <label for="contato">
+                        Nome do contato
+                    </label>
+
+                    <input
+                        type="text"
+                        id="contato"
+                        name="contato"
+                        placeholder="Nome do responsável"
+                    >
+
+
+                    <label for="telefone">
+                        Telefone
+                    </label>
+
+                    <input
+                        type="text"
+                        id="telefone"
+                        name="telefone"
+                        placeholder="(44) 99999-9999"
+                    >
+
+
+                    <label for="email">
+                        E-mail
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="contato@instituicao.com"
+                    >
+
+
+                    <label for="descricao">
+                        Descrição
+                    </label>
+
+                    <textarea
+                        id="descricao"
+                        name="descricao"
+                        placeholder="Informações sobre a instituição"
+                    ></textarea>
+
+
+                    <button type="submit">
+                        Cadastrar instituição
+                    </button>
+
+                </form>
+
+            </section>
+
+
+            <!-- LISTAGEM -->
+
+            <section class="dashboard-section">
+
+                <h2>Instituições cadastradas</h2>
+
+                <div id="listaInstituicoes">
+
+                    <p class="info">
+                        Carregando instituições...
+                    </p>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="instituicoes.js"></script>
+
+</body>
+
+</html>

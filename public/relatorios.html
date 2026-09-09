@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Relatórios - Rotary Raio de Luz</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+
+        <!-- MENU LATERAL -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+
+                <h2>Rotary</h2>
+
+                <p>Raio de Luz</p>
+
+            </div>
+
+
+            <ul class="menu">
+
+                <li>
+                    <a href="index.html">
+                        🏠 Dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a href="doacoes.html">
+                        🎁 Doações
+                    </a>
+                </li>
+
+                <li>
+                    <a href="doadores.html">
+                        👥 Doadores
+                    </a>
+                </li>
+
+                <li>
+                    <a href="instituicoes.html">
+                        🏢 Instituições
+                    </a>
+                </li>
+
+                <li>
+                    <a href="projetos.html">
+                        📋 Projetos
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        href="relatorios.html"
+                        class="active"
+                    >
+                        📊 Relatórios
+                    </a>
+                </li>
+
+            </ul>
+
+        </aside>
+
+
+
+        <!-- CONTEÚDO -->
+
+        <main class="main">
+
+
+            <div class="header">
+
+                <h1>
+                    Relatórios
+                </h1>
+
+                <p>
+                    Consulte as doações registradas
+                    em determinado período.
+                </p>
+
+            </div>
+
+
+
+            <!-- FILTRO -->
+
+            <section class="dashboard-section relatorio-filtro">
+
+                <h2>
+                    Filtrar período
+                </h2>
+
+
+                <form id="formRelatorio">
+
+
+                    <div class="campo-data">
+
+                        <label for="data_inicio">
+                            Data inicial
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data_inicio"
+                        >
+
+                    </div>
+
+
+
+                    <div class="campo-data">
+
+                        <label for="data_fim">
+                            Data final
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data_fim"
+                        >
+
+                    </div>
+
+
+
+                    <div class="campo-botao">
+
+                        <button type="submit">
+                            🔎 Consultar
+                        </button>
+
+                    </div>
+
+
+                </form>
+
+            </section>
+
+
+
+            <!-- RESUMO -->
+
+            <section class="dashboard-section">
+
+                <div class="relatorio-header">
+
+                    <h2>
+                        Resumo do período
+                    </h2>
+
+                </div>
+
+
+                <div class="resumo-cards">
+
+
+                    <div class="resumo-card">
+
+                        <span>
+                            🎁
+                        </span>
+
+                        <div>
+
+                            <p>
+                                Total de doações
+                            </p>
+
+                            <strong id="resumoDoacoes">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="resumo-card">
+
+                        <span>
+                            🏢
+                        </span>
+
+                        <div>
+
+                            <p>
+                                Instituições atendidas
+                            </p>
+
+                            <strong id="resumoInstituicoes">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="resumo-card">
+
+                        <span>
+                            📦
+                        </span>
+
+                        <div>
+
+                            <p>
+                                Quantidade de itens
+                            </p>
+
+                            <strong id="resumoQuantidade">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="resumo-card">
+
+                        <span>
+                            💰
+                        </span>
+
+                        <div>
+
+                            <p>
+                                Valor total
+                            </p>
+
+                            <strong id="resumoValor">
+                                R$ 0,00
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- RESULTADO -->
+
+            <section class="dashboard-section">
+
+
+                <div class="relatorio-header">
+
+                    <h2>
+                        Resultado
+                    </h2>
+
+
+                    <span id="totalRegistros">
+                        0 registros
+                    </span>
+
+                </div>
+
+
+
+                <div
+                    id="resultadoRelatorio"
+                    class="tabela-container"
+                >
+
+                    <p class="info">
+                        Selecione um período e clique
+                        em consultar.
+                    </p>
+
+                </div>
+
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+
+
+    <script src="relatorios.js"></script>
+
+</body>
+
+</html>

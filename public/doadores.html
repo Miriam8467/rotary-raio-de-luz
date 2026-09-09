@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Doadores - Rotary Raio de Luz</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+
+        <!-- MENU LATERAL -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+
+                <h2>Rotary</h2>
+
+                <p>Raio de Luz</p>
+
+            </div>
+
+
+            <ul class="menu">
+
+                <li>
+                    <a href="index.html">
+                        🏠 Dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a href="doacoes.html">
+                        🎁 Doações
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        href="doadores.html"
+                        class="active"
+                    >
+                        👥 Doadores
+                    </a>
+                </li>
+
+                <li>
+                    <a href="instituicoes.html">
+                        🏢 Instituições
+                    </a>
+                </li>
+
+                <li>
+                    <a href="projetos.html">
+                        📋 Projetos
+                    </a>
+                </li>
+
+                <li>
+                    <a href="relatorios.html">
+                        📊 Relatórios
+                    </a>
+                </li>
+
+            </ul>
+
+        </aside>
+
+
+
+        <!-- CONTEÚDO PRINCIPAL -->
+
+        <main class="main">
+
+
+            <div class="header">
+
+                <h1>
+                    Doadores
+                </h1>
+
+                <p>
+                    Cadastre e consulte os doadores
+                    responsáveis pelas doações recebidas.
+                </p>
+
+            </div>
+
+
+
+            <!-- CADASTRO -->
+
+            <section class="dashboard-section">
+
+                <h2>
+                    Cadastrar doador
+                </h2>
+
+
+                <form id="formDoador">
+
+
+                    <!-- TIPO -->
+
+                    <div class="campo-form">
+
+                        <label for="tipo">
+                            Tipo de doador
+                        </label>
+
+                        <select
+                            id="tipo"
+                            required
+                        >
+
+                            <option value="">
+                                Selecione
+                            </option>
+
+                            <option value="Pessoa Física">
+                                Pessoa Física
+                            </option>
+
+                            <option value="Pessoa Jurídica">
+                                Pessoa Jurídica
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- NOME -->
+
+                    <div class="campo-form">
+
+                        <label for="nome">
+                            Nome / Razão Social
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nome"
+                            placeholder="Digite o nome ou razão social"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- DOCUMENTO -->
+
+                    <div class="campo-form">
+
+                        <label for="documento">
+
+                            CPF / CNPJ
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="documento"
+                            placeholder="Digite o CPF ou CNPJ"
+                            maxlength="18"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- TELEFONE -->
+
+                    <div class="campo-form">
+
+                        <label for="telefone">
+                            Telefone
+                        </label>
+
+                        <input
+                            type="text"
+                            id="telefone"
+                            placeholder="Digite o telefone"
+                        >
+
+                    </div>
+
+
+
+                    <!-- EMAIL -->
+
+                    <div class="campo-form">
+
+                        <label for="email">
+                            E-mail
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Digite o e-mail"
+                        >
+
+                    </div>
+
+
+
+                    <!-- BOTÃO -->
+
+                    <button type="submit">
+
+                        Cadastrar doador
+
+                    </button>
+
+
+                </form>
+
+
+                <p
+                    id="mensagem"
+                    class="info"
+                ></p>
+
+            </section>
+
+
+
+            <!-- LISTA -->
+
+            <section class="dashboard-section">
+
+
+                <div class="relatorio-header">
+
+                    <h2>
+                        Doadores cadastrados
+                    </h2>
+
+                    <span id="totalDoadores">
+                        0 doadores
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="listaDoadores"
+                    class="tabela-container"
+                >
+
+                    <p class="info">
+
+                        Carregando doadores...
+
+                    </p>
+
+                </div>
+
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+
+
+    <script src="doadores.js"></script>
+
+</body>
+
+</html>

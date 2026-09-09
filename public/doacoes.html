@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Doações - Rotary Raio de Luz</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+        <!-- MENU -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+
+                <h2>Rotary</h2>
+
+                <p>Raio de Luz</p>
+
+            </div>
+
+
+            <ul class="menu">
+
+                <li>
+                    <a href="index.html">
+                        🏠 Dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        href="doacoes.html"
+                        class="active"
+                    >
+                        🎁 Doações
+                    </a>
+                </li>
+
+                <li>
+                    <a href="doadores.html">
+                        👥 Doadores
+                    </a>
+                </li>
+
+                <li>
+                    <a href="instituicoes.html">
+                        🏢 Instituições
+                    </a>
+                </li>
+
+                <li>
+                    <a href="projetos.html">
+                        📋 Projetos
+                    </a>
+                </li>
+
+                <li>
+                    <a href="relatorios.html">
+                        📊 Relatórios
+                    </a>
+                </li>
+
+            </ul>
+
+        </aside>
+
+
+        <!-- CONTEÚDO -->
+
+        <main class="main">
+
+            <div class="header">
+
+                <h1>Doações</h1>
+
+                <p>
+                    Registre e acompanhe as doações recebidas pelo
+                    Rotary Club de Campo Mourão - Raio de Luz.
+                </p>
+
+            </div>
+
+
+            <!-- FORMULÁRIO -->
+
+            <section class="dashboard-section">
+
+                <h2>Registrar nova doação</h2>
+
+                <form id="formDoacao">
+
+                    <label for="doador">
+                        Nome do doador
+                    </label>
+
+                    <input
+                        type="text"
+                        id="doador"
+                        name="doador"
+                        placeholder="Digite o nome do doador"
+                        required
+                    >
+
+
+                    <label for="data_doacao">
+                        Data da doação
+                    </label>
+
+                    <input
+                        type="date"
+                        id="data_doacao"
+                        name="data_doacao"
+                        required
+                    >
+
+
+                    <label for="tipo">
+                        Tipo de doação
+                    </label>
+
+                    <select
+                        id="tipo"
+                        name="tipo"
+                        required
+                    >
+
+                        <option value="">
+                            Selecione
+                        </option>
+
+                        <option value="Alimentos">
+                            Alimentos
+                        </option>
+
+                        <option value="Roupas">
+                            Roupas
+                        </option>
+
+                        <option value="Calçados">
+                            Calçados
+                        </option>
+
+                        <option value="Utensílios de cozinha">
+                            Utensílios de cozinha
+                        </option>
+
+                        <option value="Brinquedos">
+                            Brinquedos
+                        </option>
+
+                        <option value="Dinheiro">
+                            Dinheiro
+                        </option>
+
+                        <option value="Outros">
+                            Outros
+                        </option>
+
+                    </select>
+
+
+                    <label for="descricao">
+                        Descrição da doação
+                    </label>
+
+                    <textarea
+                        id="descricao"
+                        name="descricao"
+                        placeholder="Descreva os itens recebidos"
+                        required
+                    ></textarea>
+
+
+                    <label for="quantidade">
+                        Quantidade
+                    </label>
+
+                    <input
+                        type="number"
+                        id="quantidade"
+                        name="quantidade"
+                        min="0"
+                        step="0.01"
+                        placeholder="Ex.: 10"
+                    >
+
+
+                    <label for="valor">
+                        Valor em dinheiro
+                    </label>
+
+                    <input
+                        type="number"
+                        id="valor"
+                        name="valor"
+                        min="0"
+                        step="0.01"
+                        placeholder="Ex.: 500.00"
+                    >
+
+
+                    <label for="instituicao_id">
+                        Instituição beneficiada (opcional)
+                    </label>
+
+                    <select
+                        id="instituicao_id"
+                        name="instituicao_id"
+                    >
+
+                        <option value="">
+                            Carregando instituições...
+                        </option>
+
+                    </select>
+
+
+                    <label for="observacao">
+                        Observação
+                    </label>
+
+                    <textarea
+                        id="observacao"
+                        name="observacao"
+                        placeholder="Informações adicionais"
+                    ></textarea>
+
+
+                    <button type="submit">
+                        Registrar doação
+                    </button>
+
+                </form>
+
+            </section>
+
+
+            <!-- LISTAGEM -->
+
+            <section class="dashboard-section">
+
+                <h2>Doações registradas</h2>
+
+                <div id="listaDoacoes">
+
+                    <p class="info">
+                        Carregando doações...
+                    </p>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script src="doacoes.js"></script>
+
+</body>
+
+</html>

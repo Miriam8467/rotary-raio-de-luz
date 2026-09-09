@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Projetos - Rotary Raio de Luz</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+
+        <!-- MENU -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+
+                <h2>Rotary</h2>
+
+                <p>Raio de Luz</p>
+
+            </div>
+
+
+            <ul class="menu">
+
+                <li>
+                    <a href="index.html">
+                        🏠 Dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a href="doacoes.html">
+                        🎁 Doações
+                    </a>
+                </li>
+
+                <li>
+                    <a href="doadores.html">
+                        👥 Doadores
+                    </a>
+                </li>
+
+                <li>
+                    <a href="instituicoes.html">
+                        🏢 Instituições
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        href="projetos.html"
+                        class="active"
+                    >
+                        📋 Projetos
+                    </a>
+                </li>
+
+                <li>
+                    <a href="relatorios.html">
+                        📊 Relatórios
+                    </a>
+                </li>
+
+            </ul>
+
+        </aside>
+
+
+
+        <!-- CONTEÚDO -->
+
+        <main class="main">
+
+
+            <div class="header">
+
+                <h1>
+                    Projetos e Ações
+                </h1>
+
+                <p>
+                    Registro das ações realizadas pelo
+                    Rotary Club de Campo Mourão - Raio de Luz.
+                </p>
+
+            </div>
+
+
+
+            <!-- FORMULÁRIO -->
+
+            <section class="dashboard-section">
+
+                <h2>
+                    Registrar projeto ou ação
+                </h2>
+
+
+                <form id="formProjeto">
+
+
+                    <label for="nome">
+                        Nome do projeto/ação
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nome"
+                        name="nome"
+                        placeholder="Ex.: Ação de apoio ao Hospital"
+                        required
+                    >
+
+
+                    <label for="instituicao_id">
+                        Instituição beneficiada
+                    </label>
+
+                    <select
+                        id="instituicao_id"
+                        name="instituicao_id"
+                        required
+                    >
+
+                        <option value="">
+                            Carregando instituições...
+                        </option>
+
+                    </select>
+
+
+                    <label for="descricao">
+                        Descrição
+                    </label>
+
+                    <textarea
+                        id="descricao"
+                        name="descricao"
+                        placeholder="Descreva a ação realizada"
+                    ></textarea>
+
+
+                    <label for="data_inicio">
+                        Data de início
+                    </label>
+
+                    <input
+                        type="date"
+                        id="data_inicio"
+                        name="data_inicio"
+                    >
+
+
+                    <label for="data_conclusao">
+                        Data de conclusão
+                    </label>
+
+                    <input
+                        type="date"
+                        id="data_conclusao"
+                        name="data_conclusao"
+                    >
+
+
+                    <label for="status">
+                        Status
+                    </label>
+
+                    <select
+                        id="status"
+                        name="status"
+                    >
+
+                        <option value="Planejado">
+                            Planejado
+                        </option>
+
+                        <option value="Em andamento">
+                            Em andamento
+                        </option>
+
+                        <option value="Concluído">
+                            Concluído
+                        </option>
+
+                        <option value="Cancelado">
+                            Cancelado
+                        </option>
+
+                    </select>
+
+
+                    <label for="valor">
+                        Valor investido
+                    </label>
+
+                    <input
+                        type="number"
+                        id="valor"
+                        name="valor"
+                        min="0"
+                        step="0.01"
+                        placeholder="Ex.: 2500.00"
+                    >
+
+
+                    <label for="observacao">
+                        Observação
+                    </label>
+
+                    <textarea
+                        id="observacao"
+                        name="observacao"
+                        placeholder="Informações adicionais"
+                    ></textarea>
+
+
+                    <button type="submit">
+                        Registrar projeto
+                    </button>
+
+
+                </form>
+
+            </section>
+
+
+
+            <!-- LISTAGEM -->
+
+            <section class="dashboard-section">
+
+                <h2>
+                    Projetos registrados
+                </h2>
+
+
+                <div id="listaProjetos">
+
+                    <p class="info">
+                        Carregando projetos...
+                    </p>
+
+                </div>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+
+
+    <script src="projetos.js"></script>
+
+</body>
+
+</html>
