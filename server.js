@@ -6,7 +6,6 @@ const session = require("express-session");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 require("dotenv").config();
-
 const pino = require("pino");
 
 const logger = pino({
@@ -14,6 +13,8 @@ const logger = pino({
 });
 
 const app = express();
+
+app.set("trust proxy", 1);
 
 app.use(helmet({
     contentSecurityPolicy: false
