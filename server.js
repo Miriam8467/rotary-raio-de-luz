@@ -37,50 +37,6 @@ const pool = new Pool({
 
 });
 
-// ========================================
-// DIAGNÓSTICO TEMPORÁRIO DO BANCO
-// ========================================
-
-app.get("/api/diagnostico-banco", async (req, res) => {
-
-    try {
-
-        const resultado = await pool.query(`
-            SELECT
-                current_database() AS banco,
-                current_user AS usuario,
-                current_schema() AS schema,
-                inet_server_addr() AS servidor
-        `);
-
-        const contagem = await pool.query(`
-            SELECT
-                (SELECT COUNT(*) FROM doadores) AS doadores,
-                (SELECT COUNT(*) FROM instituicoes) AS instituicoes,
-                (SELECT COUNT(*) FROM projetos) AS projetos,
-                (SELECT COUNT(*) FROM doacoes) AS doacoes,
-                (SELECT COUNT(*) FROM usuarios) AS usuarios
-        `);
-
-        res.json({
-            sucesso: true,
-            conexao: resultado.rows[0],
-            registros: contagem.rows[0]
-        });
-
-    } catch (erro) {
-
-        logger.error(erro);
-
-        res.status(500).json({
-            sucesso: false,
-            mensagem: "Erro ao verificar banco de dados"
-        });
-
-    }
-
-});
-
 
 // ========================================
 // CONFIGURAÇÕES
