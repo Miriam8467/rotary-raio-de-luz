@@ -196,14 +196,15 @@ function exigirAutenticacao(req, res, next) {
 
 app.use((req, res, next) => {
 
-    const paginasProtegidas = [
-        "/",
-        "/index.html",
-        "/doacoes.html",
-        "/doadores.html",
-        "/instituicoes.html",
-        "/projetos.html",
-        "/relatorios.html"
+   const paginasProtegidas = [
+    "/",
+    "/index.html",
+    "/doacoes.html",
+    "/doadores.html",
+    "/instituicoes.html",
+    "/projetos.html",
+    "/relatorios.html",
+    "/usuarios.html"
     ];
 
     if (paginasProtegidas.includes(req.path)) {
@@ -268,6 +269,18 @@ app.get("/relatorios.html", exigirAutenticacao, (req, res) => {
     res.sendFile(
         path.join(__dirname, "public", "relatorios.html")
     );
+});
+
+// ========================================
+// PÁGINA DE USUÁRIOS
+// ========================================
+
+app.get("/usuarios.html", exigirAutenticacao, (req, res) => {
+
+    res.sendFile(
+        path.join(__dirname, "public", "usuarios.html")
+    );
+
 });
 
 // ========================================
@@ -459,6 +472,28 @@ app.post(
 
     }
 );
+
+// ========================================
+// USUÁRIO LOGADO
+// ========================================
+
+app.get("/api/me", (req, res) => {
+
+    if (!req.session || !req.session.usuario) {
+
+        return res.status(401).json({
+            sucesso: false,
+            mensagem: "Usuário não autenticado."
+        });
+
+    }
+
+    return res.json({
+        sucesso: true,
+        usuario: req.session.usuario
+    });
+
+});
 
 
 // ========================================
@@ -3999,6 +4034,924 @@ app.get("/api/relatorios/resumo", async (req, res) => {
 
             mensagem:
                 "Erro ao gerar resumo do relatório."
+
+        });
+
+    }
+
+});
+
+// ========================================
+// USUÁRIOS
+// ========================================
+
+// ========================================
+// LISTAR USUÁRIOS
+// ========================================
+
+app.get("/api/usuarios", async (req, res) => {
+
+    try {
+
+        const resultado = await pool.query(`
+            
+            SELECT
+                id,
+                nome,
+                email,
+                ativo,
+
+                TO_CHAR(
+                    criado_em AT TIME ZONE 'America/Sao_Paulo',
+                    'DD/MM/YYYY HH24:MI:SS'
+                ) AS criado_em
+
+            FROM usuarios
+
+            ORDER BY id DESC
+
+        `);
+
+        logger.info({
+            evento: "usuarios_listados",
+            total_usuarios: resultado.rows.length
+        });
+
+        return res.json({
+
+            sucesso: true,
+
+            total:
+                resultado.rows.length,
+
+            dados:
+                resultado.rows
+
+        });
+
+    } catch (erro) {
+
+        logger.error({
+            evento: "erro_listagem_usuarios",
+            mensagem: erro.message
+        });
+
+        console.error(
+            "Erro ao buscar usuários:",
+            erro
+        );
+
+        return res.status(500).json({
+
+            sucesso: false,
+
+            mensagem:
+                "Erro ao carregar os usuários."
+
+        });
+
+    }
+
+});
+
+
+// ========================================
+// CADASTRAR USUÁRIO
+// ========================================
+
+app.post("/api/usuarios", async (req, res) => {
+
+    try {
+
+        const {
+            nome,
+            email,
+            senha
+        } = req.body;
+
+
+        // ====================================
+        // VALIDAR NOME
+        // ====================================
+
+        if (!textoValido(nome, 2, 150)) {
+
+            return res.status(400).json({
+
+                sucesso: false,
+
+                mensagem:
+                    "O nome do usuário é obrigatório e deve possuir entre 2 e 150 caracteres."
+
+            });
+
+        }
+
+
+        // ====================================
+        // VALIDAR E-MAIL
+        // ====================================
+
+        if (!emailValido(email)) {
+
+            return res.status(400).json({
+
+                sucesso: false,
+
+                mensagem:
+                    "Informe um e-mail válido."
+
+            });
+
+        }
+
+
+        // ====================================
+        // VALIDAR SENHA
+        // ====================================
+
+        if (
+            typeof senha !== "string" ||
+            senha.length < 6
+        ) {
+
+            return res.status(400).json({
+
+                sucesso: false,
+
+                mensagem:
+                    "A senha deve possuir pelo menos 6 caracteres."
+
+            });
+
+        }
+
+
+        // ====================================
+        // LIMPAR DADOS
+        // ====================================
+
+        const nomeLimpo =
+            nome.trim();
+
+        const emailLimpo =
+            email.trim().toLowerCase();
+
+
+        // ====================================
+        // VERIFICAR E-MAIL DUPLICADO
+        // ====================================
+
+        const usuarioExistente =
+            await pool.query(
+                `
+                SELECT id
+                FROM usuarios
+                WHERE LOWER(email) = LOWER($1)
+                `,
+                [emailLimpo]
+            );
+
+
+        if (
+            usuarioExistente.rows.length > 0
+        ) {
+
+            return res.status(409).json({
+
+                sucesso: false,
+
+                mensagem:
+                    "Já existe um usuário cadastrado com este e-mail."
+
+            });
+
+        }
+
+
+        // ====================================
+        // CRIPTOGRAFAR SENHA
+        // ====================================
+
+        const senhaHash =
+            await bcrypt.hash(
+                senha,
+                10
+            );
+
+
+        // ====================================
+        // CADASTRAR USUÁRIO
+        // ====================================
+
+        const resultado =
+            await pool.query(
+                `
+                INSERT INTO usuarios
+                (
+                    nome,
+                    email,
+                    senha,
+                    ativo
+                )
+
+                VALUES
+                (
+                    $1,
+                    $2,
+                    $3,
+                    true
+                )
+
+                RETURNING
+                    id,
+                    nome,
+                    email,
+                    ativo,
+                    criado_em
+                `,
+                [
+                    nomeLimpo,
+                    emailLimpo,
+                    senhaHash
+                ]
+            );
+
+
+        // ====================================
+        // REGISTRAR LOG
+        // ====================================
+
+        logger.info({
+
+            evento:
+                "usuario_cadastrado",
+
+            usuario_id:
+                resultado.rows[0].id
+
+        });
+
+
+        // ====================================
+        // RESPOSTA
+        // ====================================
+
+        return res.status(201).json({
+
+            sucesso: true,
+
+            mensagem:
+                "Usuário cadastrado com sucesso!",
+
+            usuario:
+                resultado.rows[0]
+
+        });
+
+    } catch (erro) {
+
+        logger.error({
+
+            evento:
+                "erro_cadastro_usuario",
+
+            mensagem:
+                erro.message
+
+        });
+
+        console.error(
+            "Erro ao cadastrar usuário:",
+            erro
+        );
+
+        return res.status(500).json({
+
+            sucesso: false,
+
+            mensagem:
+                "Erro ao cadastrar usuário."
+
+        });
+
+    }
+
+});
+
+
+// ========================================
+// BUSCAR USUÁRIO POR ID
+// ========================================
+
+app.get("/api/usuarios/:id", async (req, res) => {
+
+    try {
+
+        const { id } =
+            req.params;
+
+
+        if (!idValido(id)) {
+
+            return res.status(400).json({
+
+                sucesso: false,
+
+                mensagem:
+                    "O ID do usuário é inválido."
+
+            });
+
+        }
+
+
+        const resultado =
+            await pool.query(
+                `
+                SELECT
+                    id,
+                    nome,
+                    email,
+                    ativo,
+                    criado_em
+                FROM usuarios
+                WHERE id = $1
+                `,
+                [Number(id)]
+            );
+
+
+        if (
+            resultado.rows.length === 0
+        ) {
+
+            return res.status(404).json({
+
+                sucesso: false,
+
+                mensagem:
+                    "Usuário não encontrado."
+
+            });
+
+        }
+
+
+        return res.json({
+
+            sucesso: true,
+
+            dados:
+                resultado.rows[0]
+
+        });
+
+    } catch (erro) {
+
+        logger.error({
+
+            evento:
+                "erro_consulta_usuario",
+
+            mensagem:
+                erro.message
+
+        });
+
+        console.error(
+            "Erro ao buscar usuário:",
+            erro
+        );
+
+        return res.status(500).json({
+
+            sucesso: false,
+
+            mensagem:
+                "Erro ao buscar usuário."
+
+        });
+
+    }
+
+});
+
+
+// ========================================
+// EDITAR USUÁRIO
+// ========================================
+
+app.put("/api/usuarios/:id", async (req, res) => {
+
+    try {
+
+        const { id } =
+            req.params;
+
+        const {
+            nome,
+            email,
+            senha
+        } = req.body;
+
+
+        // ====================================
+        // VALIDAR ID
+        // ====================================
+
+        if (!idValido(id)) {
+
+            return res.status(400).json({
+
+                sucesso: false,
+
+                mensagem:
+                    "O ID do usuário é inválido."
+
+            });
+
+        }
+
+
+        // ====================================
+        // VALIDAR NOME
+        // ====================================
+
+        if (!textoValido(nome, 2, 150)) {
+
+            return res.status(400).json({
+
+                sucesso: false,
+
+                mensagem:
+                    "O nome do usuário é obrigatório e deve possuir entre 2 e 150 caracteres."
+
+            });
+
+        }
+
+
+        // ====================================
+        // VALIDAR E-MAIL
+        // ====================================
+
+        if (!emailValido(email)) {
+
+            return res.status(400).json({
+
+                sucesso: false,
+
+                mensagem:
+                    "Informe um e-mail válido."
+
+            });
+
+        }
+
+
+        const usuarioId =
+            Number(id);
+
+        const nomeLimpo =
+            nome.trim();
+
+        const emailLimpo =
+            email.trim().toLowerCase();
+
+
+        // ====================================
+        // VERIFICAR SE USUÁRIO EXISTE
+        // ====================================
+
+        const usuarioExistente =
+            await pool.query(
+                `
+                SELECT id
+                FROM usuarios
+                WHERE id = $1
+                `,
+                [usuarioId]
+            );
+
+
+        if (
+            usuarioExistente.rows.length === 0
+        ) {
+
+            return res.status(404).json({
+
+                sucesso: false,
+
+                mensagem:
+                    "Usuário não encontrado."
+
+            });
+
+        }
+
+
+        // ====================================
+        // VERIFICAR E-MAIL DUPLICADO
+        // ====================================
+
+        const emailExistente =
+            await pool.query(
+                `
+                SELECT id
+                FROM usuarios
+                WHERE LOWER(email) = LOWER($1)
+                AND id <> $2
+                `,
+                [
+                    emailLimpo,
+                    usuarioId
+                ]
+            );
+
+
+        if (
+            emailExistente.rows.length > 0
+        ) {
+
+            return res.status(409).json({
+
+                sucesso: false,
+
+                mensagem:
+                    "Já existe outro usuário cadastrado com este e-mail."
+
+            });
+
+        }
+
+
+        // ====================================
+        // ATUALIZAR SEM ALTERAR SENHA
+        // ====================================
+
+        if (
+            senha === undefined ||
+            senha === null ||
+            senha === ""
+        ) {
+
+            const resultado =
+                await pool.query(
+                    `
+                    UPDATE usuarios
+
+                    SET
+                        nome = $1,
+                        email = $2
+
+                    WHERE id = $3
+
+                    RETURNING
+                        id,
+                        nome,
+                        email,
+                        ativo,
+                        criado_em
+                    `,
+                    [
+                        nomeLimpo,
+                        emailLimpo,
+                        usuarioId
+                    ]
+                );
+
+
+            logger.info({
+
+                evento:
+                    "usuario_atualizado",
+
+                usuario_id:
+                    usuarioId
+
+            });
+
+
+            return res.json({
+
+                sucesso: true,
+
+                mensagem:
+                    "Usuário atualizado com sucesso!",
+
+                usuario:
+                    resultado.rows[0]
+
+            });
+
+        }
+
+
+        // ====================================
+        // VALIDAR NOVA SENHA
+        // ====================================
+
+        if (
+            typeof senha !== "string" ||
+            senha.length < 6
+        ) {
+
+            return res.status(400).json({
+
+                sucesso: false,
+
+                mensagem:
+                    "A senha deve possuir pelo menos 6 caracteres."
+
+            });
+
+        }
+
+
+        // ====================================
+        // CRIPTOGRAFAR NOVA SENHA
+        // ====================================
+
+        const senhaHash =
+            await bcrypt.hash(
+                senha,
+                10
+            );
+
+
+        // ====================================
+        // ATUALIZAR USUÁRIO E SENHA
+        // ====================================
+
+        const resultado =
+            await pool.query(
+                `
+                UPDATE usuarios
+
+                SET
+                    nome = $1,
+                    email = $2,
+                    senha = $3
+
+                WHERE id = $4
+
+                RETURNING
+                    id,
+                    nome,
+                    email,
+                    ativo,
+                    criado_em
+                `,
+                [
+                    nomeLimpo,
+                    emailLimpo,
+                    senhaHash,
+                    usuarioId
+                ]
+            );
+
+
+        logger.info({
+
+            evento:
+                "usuario_atualizado_com_senha",
+
+            usuario_id:
+                usuarioId
+
+        });
+
+
+        return res.json({
+
+            sucesso: true,
+
+            mensagem:
+                "Usuário atualizado com sucesso!",
+
+            usuario:
+                resultado.rows[0]
+
+        });
+
+    } catch (erro) {
+
+        logger.error({
+
+            evento:
+                "erro_edicao_usuario",
+
+            mensagem:
+                erro.message
+
+        });
+
+        console.error(
+            "Erro ao editar usuário:",
+            erro
+        );
+
+        return res.status(500).json({
+
+            sucesso: false,
+
+            mensagem:
+                "Erro ao editar usuário."
+
+        });
+
+    }
+
+});
+
+
+// ========================================
+// ATIVAR / DESATIVAR USUÁRIO
+// ========================================
+
+app.patch("/api/usuarios/:id/status", async (req, res) => {
+
+    try {
+
+        const { id } =
+            req.params;
+
+        const { ativo } =
+            req.body;
+
+
+        // ====================================
+        // VALIDAR ID
+        // ====================================
+
+        if (!idValido(id)) {
+
+            return res.status(400).json({
+
+                sucesso: false,
+
+                mensagem:
+                    "O ID do usuário é inválido."
+
+            });
+
+        }
+
+
+        // ====================================
+        // VALIDAR STATUS
+        // ====================================
+
+        if (typeof ativo !== "boolean") {
+
+            return res.status(400).json({
+
+                sucesso: false,
+
+                mensagem:
+                    "O status do usuário é inválido."
+
+            });
+
+        }
+
+
+        const usuarioId =
+            Number(id);
+
+
+        // ====================================
+        // IMPEDIR AUTO DESATIVAÇÃO
+        // ====================================
+
+        if (
+            req.session.usuario &&
+            Number(req.session.usuario.id) === usuarioId &&
+            ativo === false
+        ) {
+
+            return res.status(400).json({
+
+                sucesso: false,
+
+                mensagem:
+                    "Você não pode desativar o próprio usuário."
+
+            });
+
+        }
+
+
+        // ====================================
+        // VERIFICAR USUÁRIO
+        // ====================================
+
+        const usuarioExistente =
+            await pool.query(
+                `
+                SELECT id, nome
+                FROM usuarios
+                WHERE id = $1
+                `,
+                [usuarioId]
+            );
+
+
+        if (
+            usuarioExistente.rows.length === 0
+        ) {
+
+            return res.status(404).json({
+
+                sucesso: false,
+
+                mensagem:
+                    "Usuário não encontrado."
+
+            });
+
+        }
+
+
+        // ====================================
+        // ATUALIZAR STATUS
+        // ====================================
+
+        const resultado =
+            await pool.query(
+                `
+                UPDATE usuarios
+
+                SET
+                    ativo = $1
+
+                WHERE id = $2
+
+                RETURNING
+                    id,
+                    nome,
+                    email,
+                    ativo,
+                    criado_em
+                `,
+                [
+                    ativo,
+                    usuarioId
+                ]
+            );
+
+
+        logger.info({
+
+            evento:
+                ativo
+                    ? "usuario_ativado"
+                    : "usuario_desativado",
+
+            usuario_id:
+                usuarioId
+
+        });
+
+
+        return res.json({
+
+            sucesso: true,
+
+            mensagem:
+                ativo
+                    ? "Usuário ativado com sucesso!"
+                    : "Usuário desativado com sucesso!",
+
+            usuario:
+                resultado.rows[0]
+
+        });
+
+    } catch (erro) {
+
+        logger.error({
+
+            evento:
+                "erro_alteracao_status_usuario",
+
+            mensagem:
+                erro.message
+
+        });
+
+        console.error(
+            "Erro ao alterar status do usuário:",
+            erro
+        );
+
+        return res.status(500).json({
+
+            sucesso: false,
+
+            mensagem:
+                "Erro ao alterar status do usuário."
 
         });
 

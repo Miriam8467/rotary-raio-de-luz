@@ -1668,3 +1668,376 @@ form button:hover {
     }
 
 }
+
+/* ========================================
+   USUÁRIOS
+======================================== */
+
+.usuarios-listagem {
+    margin-top: 20px;
+}
+
+
+/* ========================================
+   AJUDA DO FORMULÁRIO
+======================================== */
+
+.ajuda-formulario {
+    margin-top: -3px;
+    color: var(--texto-secundario);
+    font-size: 12px;
+}
+
+
+/* ========================================
+   MENSAGENS
+======================================== */
+
+.mensagem {
+    min-height: 22px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.mensagem.sucesso {
+    color: var(--sucesso);
+}
+
+.mensagem.erro {
+    color: var(--perigo);
+}
+
+.mensagem.info-mensagem {
+    color: var(--azul-rotary);
+}
+
+
+/* ========================================
+   AÇÕES DO FORMULÁRIO
+======================================== */
+
+.acoes-formulario {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 5px;
+}
+
+
+/* ========================================
+   BOTÃO PRINCIPAL
+======================================== */
+
+.acoes-formulario .btn-principal {
+    flex: 1;
+    margin-top: 15px;
+}
+
+
+/* ========================================
+   BOTÃO CANCELAR EDIÇÃO
+======================================== */
+
+.btn-cancelar-edicao {
+    margin-top: 15px;
+    padding: 12px 18px;
+    border: 1px solid #ccd3dc;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #4b5563;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.btn-cancelar-edicao:hover {
+    background-color: #f5f7fa;
+    border-color: #b8c1cc;
+    transform: translateY(-1px);
+}
+
+
+/* ========================================
+   TABELA DE USUÁRIOS
+======================================== */
+
+.tabela-usuarios {
+    min-width: 850px !important;
+}
+
+
+/* ========================================
+   NOME DO USUÁRIO
+======================================== */
+
+.nome-usuario {
+    color: var(--texto);
+    font-weight: 600;
+}
+
+
+/* ========================================
+   STATUS DO USUÁRIO
+======================================== */
+
+.status-usuario-ativo,
+.status-usuario-inativo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 72px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+.status-usuario-ativo {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+
+.status-usuario-inativo {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+
+/* ========================================
+   AÇÕES DOS USUÁRIOS
+======================================== */
+
+.acoes-usuario {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+
+/* ========================================
+   BOTÃO EDITAR
+======================================== */
+
+.btn-editar-usuario,
+.btn-desativar,
+.btn-ativar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-height: 34px;
+    padding: 7px 12px;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.btn-editar-usuario {
+    border: 1px solid #17458f;
+    background-color: #ffffff;
+    color: #17458f;
+}
+
+
+.btn-editar-usuario:hover {
+    background-color: #eaf1fb;
+    border-color: #17458f;
+    transform: translateY(-1px);
+}
+
+
+/* ========================================
+   BOTÃO DESATIVAR
+======================================== */
+
+.btn-desativar {
+    border: 1px solid #c62828;
+    background-color: #ffffff;
+    color: #c62828;
+}
+
+
+.btn-desativar:hover {
+    background-color: #ffebee;
+    border-color: #c62828;
+    transform: translateY(-1px);
+}
+
+
+/* ========================================
+   BOTÃO ATIVAR
+======================================== */
+
+.btn-ativar {
+    border: 1px solid #2e7d32;
+    background-color: #ffffff;
+    color: #2e7d32;
+}
+
+
+.btn-ativar:hover {
+    background-color: #e8f5e9;
+    border-color: #2e7d32;
+    transform: translateY(-1px);
+}
+
+
+/* ========================================
+   BOTÕES DESABILITADOS
+======================================== */
+
+.btn-editar-usuario:disabled,
+.btn-desativar:disabled,
+.btn-ativar:disabled,
+.btn-principal:disabled {
+    opacity: 0.65;
+    cursor: wait;
+    transform: none;
+}
+
+
+/* ========================================
+   RESPONSIVIDADE - USUÁRIOS
+======================================== */
+
+@media (max-width: 600px) {
+
+    .acoes-formulario {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+
+    .acoes-formulario .btn-principal,
+    .btn-cancelar-edicao {
+        width: 100%;
+    }
+
+
+    .acoes-usuario {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+
+    .btn-editar-usuario,
+    .btn-desativar,
+    .btn-ativar {
+        width: 100%;
+    }
+
+}
+
+/* ==================================================
+   BOTÃO SAIR
+================================================== */
+
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.btn-logout {
+    width: 100%;
+    padding: 11px 15px;
+    background: #ffffff;
+    border: 1px solid #dce2e8;
+    border-radius: 8px;
+    color: #53657a;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-logout:hover {
+    background: #f5f7fa;
+    border-color: #174ea6;
+    color: #174ea6;
+}
+
+
+/* ==================================================
+   MODAL DE LOGOUT
+================================================== */
+
+.logout-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 35, 50, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+}
+
+.logout-modal-content {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 30px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
+    text-align: center;
+}
+
+.logout-modal-content h2 {
+    margin: 0 0 10px;
+    color: #17324d;
+}
+
+.logout-modal-content p {
+    margin: 0 0 25px;
+    color: #66788a;
+}
+
+.logout-modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.logout-modal-buttons button {
+    min-width: 110px;
+    padding: 11px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.logout-cancel {
+    background: #ffffff;
+    border: 1px solid #d5dce4;
+    color: #53657a;
+}
+
+.logout-confirm {
+    background: #174ea6;
+    border: 1px solid #174ea6;
+    color: #ffffff;
+}
+
+.logout-confirm:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

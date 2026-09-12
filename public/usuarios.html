@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Usuários - Rotary Raio de Luz</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+
+        <!-- ========================================
+             MENU LATERAL
+        ========================================= -->
+
+        <aside class="sidebar">
+
+
+            <div class="logo">
+
+                <h2>Rotary</h2>
+
+                <p>Raio de Luz</p>
+
+            </div>
+
+
+            <ul class="menu">
+
+
+                <li>
+
+                    <a href="index.html">
+
+                        🏠
+                        Dashboard
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="doacoes.html">
+
+                        🎁
+                        Doações
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="doadores.html">
+
+                        👥
+                        Doadores
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="instituicoes.html">
+
+                        🏢
+                        Instituições
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="projetos.html">
+
+                        📋
+                        Projetos
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="relatorios.html">
+
+                        📊
+                        Relatórios
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a
+                        href="usuarios.html"
+                        class="active"
+                    >
+
+                        👤
+                        Usuários
+
+                    </a>
+
+                </li>
+
+
+            </ul>
+
+            <div class="sidebar-footer">
+
+                <button
+                    type="button"
+                    id="btnLogout"
+                    class="btn-logout"
+                >
+                    Sair
+                </button>
+
+            </div>
+
+
+        </aside>
+
+
+        <!-- ========================================
+             CONTEÚDO PRINCIPAL
+        ========================================= -->
+
+        <main class="main">
+
+
+            <!-- ====================================
+                 CABEÇALHO
+            ===================================== -->
+
+            <div class="header">
+
+                <h1>
+                    Usuários
+                </h1>
+
+                <p>
+                    Cadastro e gerenciamento dos usuários do sistema.
+                </p>
+
+            </div>
+
+
+            <!-- ====================================
+                 FORMULÁRIO
+            ===================================== -->
+
+            <section class="dashboard-section">
+
+
+                <h2 id="tituloFormulario">
+                    Novo usuário
+                </h2>
+
+
+                <form id="formUsuario">
+
+
+                    <!-- ID usado somente durante edição -->
+
+                    <input
+                        type="hidden"
+                        id="usuarioId"
+                    >
+
+
+                    <!-- NOME -->
+
+                    <label for="nome">
+
+                        Nome do usuário
+
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="nome"
+                        name="nome"
+                        placeholder="Digite o nome do usuário"
+                        maxlength="150"
+                        required
+                    >
+
+
+                    <!-- E-MAIL -->
+
+                    <label for="email">
+
+                        E-mail
+
+                    </label>
+
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="usuario@exemplo.com"
+                        required
+                    >
+
+
+                    <!-- SENHA -->
+
+                    <label for="senha">
+
+                        Senha
+
+                    </label>
+
+
+                    <input
+                        type="password"
+                        id="senha"
+                        name="senha"
+                        placeholder="Digite a senha"
+                        minlength="6"
+                    >
+
+
+                    <p
+                        id="ajudaSenha"
+                        class="ajuda-formulario"
+                    >
+                        A senha deve possuir pelo menos 6 caracteres.
+                    </p>
+
+
+                    <!-- MENSAGEM -->
+
+                    <div
+                        id="mensagemUsuario"
+                        class="mensagem"
+                    ></div>
+
+
+                    <!-- BOTÕES -->
+
+                    <div class="acoes-formulario">
+
+
+                        <button
+                            type="submit"
+                            id="btnSalvarUsuario"
+                            class="btn-principal"
+                        >
+
+                            Cadastrar usuário
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            id="btnCancelarEdicao"
+                            class="btn-cancelar-edicao"
+                            style="display: none;"
+                        >
+
+                            Cancelar edição
+
+                        </button>
+
+
+                    </div>
+
+
+                </form>
+
+
+            </section>
+
+
+            <!-- ====================================
+                 LISTAGEM
+            ===================================== -->
+
+            <section class="dashboard-section usuarios-listagem">
+
+
+                <div class="section-title">
+
+                    <div>
+
+                        <h2>
+                            Usuários cadastrados
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div id="listaUsuarios">
+
+                    <p class="info">
+                        Carregando usuários...
+                    </p>
+
+                </div>
+
+
+            </section>
+
+
+        </main>
+
+
+    </div>
+
+
+    <!-- ========================================
+         JAVASCRIPT
+    ========================================= -->
+    
+    <script src="usuario-logado.js"></script>
+    <script src="usuarios.js"></script>
+    <script src="logout.js"></script>
+
+</body>
+</html>

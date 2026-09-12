@@ -30,6 +30,9 @@ const resumoTipos =
 const statusDashboard =
     document.getElementById("statusDashboard");
 
+const mensagemBoasVindas =
+    document.getElementById("mensagemBoasVindas");
+
 
 // ========================================
 // FORMATAR MOEDA
@@ -44,6 +47,110 @@ function formatarMoeda(valor) {
             currency: "BRL"
         }
     );
+
+}
+
+
+// ========================================
+// CARREGAR USUÁRIO LOGADO
+// ========================================
+
+async function carregarUsuario() {
+
+    try {
+
+        console.log(
+            "Consultando /api/me..."
+        );
+
+
+        const resposta =
+            await fetch(
+                "/api/me"
+            );
+
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                "Não foi possível identificar o usuário."
+            );
+
+        }
+
+
+        const dados =
+            await resposta.json();
+
+
+        console.log(
+            "Usuário da sessão:",
+            dados
+        );
+
+
+        if (
+            dados.sucesso &&
+            dados.usuario
+        ) {
+
+            const nomeCompleto =
+                dados.usuario.nome ||
+                "Usuário";
+
+
+            // Pegar somente o primeiro nome
+
+            const primeiroNome =
+                nomeCompleto
+                    .trim()
+                    .split(" ")[0];
+
+
+            if (mensagemBoasVindas) {
+
+                mensagemBoasVindas.innerHTML = `
+
+                    <strong>
+                        Olá, ${primeiroNome}! 👋
+                    </strong>
+
+                    <br>
+
+                    Seja bem-vinda ao sistema
+                    <strong>
+                        Rotary Raio de Luz
+                    </strong>.
+
+                `;
+
+            }
+
+        }
+
+    }
+
+    catch (erro) {
+
+        console.error(
+            "Erro ao carregar usuário:",
+            erro
+        );
+
+
+        if (mensagemBoasVindas) {
+
+            mensagemBoasVindas.innerHTML = `
+
+                Visão geral do sistema do
+                Rotary Club de Campo Mourão -
+                Raio de Luz.
+
+            `;
+
+        }
+
+    }
 
 }
 
@@ -437,5 +544,7 @@ function carregarResumoTipos(tipos) {
 // ========================================
 // INICIALIZAÇÃO
 // ========================================
+
+carregarUsuario();
 
 carregarDashboard();
